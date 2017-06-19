@@ -4,10 +4,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import com.xamarin.testcloud.espresso.Factory;
+import com.xamarin.testcloud.espresso.ReportHelper;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -29,15 +31,21 @@ public class MainActivityInstrumentationTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
+    @Rule
+    public ReportHelper reportHelper = Factory.getReportHelper();
 
     @Test
     public void sayHello(){
         onView(withId(R.id.editText)).perform(typeText(STRING_TO_BE_TYPED), closeSoftKeyboard()); //line 1
 
         onView(withText("Say hello!")).perform(click()); //line 2
-
+        reportHelper.label("sayHello");
         String expectedText = "Hello, " + STRING_TO_BE_TYPED + "!";
         onView(withId(R.id.textView)).check(matches(withText(expectedText))); //line 3
     }
+    @After
 
+    public void TearDown(){
+        reportHelper.label("Stopping App");
+    }
 }
