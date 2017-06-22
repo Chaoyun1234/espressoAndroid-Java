@@ -16,8 +16,9 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MobileCenter.start(getApplication(), "7800c652-e38a-406e-a6ec-35f242576409",
+        MobileCenter.start(getApplication(), "61b1ef63-9e99-4620-a23a-095174820e7a",
                 Analytics.class, Crashes.class);
+        Analytics.trackEvent("Click_SayHello");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
